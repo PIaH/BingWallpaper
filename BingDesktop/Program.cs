@@ -25,7 +25,11 @@ namespace BingDesktop
             {
                 await MainInternal(args);
             }).Wait();
+
+#if DEBUG
+            Console.WriteLine("Press any key to exit");
             Console.ReadKey();
+#endif
         }
 
         static async Task MainInternal(string[] args)
@@ -64,8 +68,10 @@ namespace BingDesktop
                             await webClient.DownloadFileTaskAsync(imageurl, image.enddate + EXT);
                         }
                     }
+                    Out("Enhancing wallpaper with text");
+                    var wallpaperFilename = Wallpaper.CreateWallpaperWithText(image.enddate + EXT, Losungen.ReadFromXml(@"Losungen\Losungen Free 2016.xml", DateTime.Now));
                     Out("Setting wallpaper");
-                    Wallpaper.Set(image.enddate + EXT, Wallpaper.Style.Stretched);
+                    Wallpaper.Set(wallpaperFilename, Wallpaper.Style.Stretched);
                     Out("Wallpaper successfully applied");
                 }
             }
