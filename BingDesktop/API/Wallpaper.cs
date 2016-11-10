@@ -70,7 +70,13 @@ namespace BingDesktop.API
         {
             var nl = Environment.NewLine;
             int margin = 60;
-            var newFilename = "modified_" + imagePath;
+
+            var fi = new FileInfo(imagePath);
+            var dir = fi.Directory.Name;
+            var ext = fi.Extension;
+            var filename = fi.Name.Substring(0, fi.Name.Length - ext.Length);
+
+            var newFilename = Path.Combine(dir, filename + "_losungen" + ext).ToString();
 
             using (var bmp = new Bitmap(imagePath))
             {
@@ -103,36 +109,8 @@ namespace BingDesktop.API
                     }
                 }
             }
-
-            //Start
-
-
-            //This function checks the room size and your text and appropriate font for your text to fit in room
-            //PreferedFont is the Font that you wish to apply
-            //Room is your space in which your text should be in.
-            //LongString is the string which it's bounds is more than room bounds.
-
-
-
-            Bitmap bitmap = new Bitmap(800, 110);
-
-            using (System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(bitmap))
-            using (Font font1 = new Font("Arial", 120, FontStyle.Regular, GraphicsUnit.Pixel))
-            {
-                Rectangle rect1 = new Rectangle(0, 0, 800, 110);
-
-                StringFormat stringFormat = new StringFormat();
-                stringFormat.Alignment = StringAlignment.Center;
-                stringFormat.LineAlignment = StringAlignment.Center;
-                graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-
-                Font goodFont = FindFont(graphics, "Billy Reallylonglastnameinstein", rect1.Size, font1);
-                graphics.DrawString("Billy Reallylonglastnameinstein", goodFont, Brushes.Red, rect1, stringFormat);
-            }
-
-
-
-            // End
+            // delete old image
+            File.Delete(imagePath);
 
             return newFilename;
         }
