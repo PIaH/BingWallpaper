@@ -5,5 +5,7 @@ Put this application into your autostart and it will give you another wallpaper 
 It will also display a christian text in an overlay within the bitmap. The texts are the "Losungen" from http://www.losungen.de/.
 ## How to use
   - Build with msbuild (VS 2013): 
-```msbuild BingDesktop.sln```
+    Debug: ```msbuild BingDesktop.sln /p:Configuration=Debug```
+	Release: ```msbuild BingDesktop.sln /p:Configuration=Release```
+
   - Run the application ```BingDesktop.exe```
