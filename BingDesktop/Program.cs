@@ -3,12 +3,10 @@ using BingDesktop.Data;
 using BingDesktop.Misc;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BingDesktop
@@ -18,6 +16,7 @@ namespace BingDesktop
         private const string ENDPOINT = @"/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-De";
         private const string HOST = @"http://www.bing.com";
         private const string EXT = @".jpg";
+        private const string IMAGEDIR = @"Wallpapers/";
 
         static void Main(string[] args)
         {
@@ -46,30 +45,53 @@ namespace BingDesktop
                     var data = JsonConvert.DeserializeObject<RootObject>(body);
                     if (data == null)
                     {
-                        Out("The received answer is not valid");
+                        Out("The received data is not valid");
                         return;
                     }
                     var image = data.images.FirstOrDefault();
                     if (image == null)
                     {
-                        Out("The received answer contains no image information");
+                        Out("The received data contains no image information");
                         return;
                     }
-                    var imageurl = HOST + image.url;
-                    if (File.Exists(image.enddate + EXT))
+                    var downloadedImagePath = GetImagePath(image);
+                    if (File.Exists(downloadedImagePath))
                     {
                         Out("The image file has already been downloaded");
                     }
                     else
                     {
+                        if (!Directory.Exists(IMAGEDIR))
+                        {
+                            Out("Creating directory for wallpapers");
+                            var directoryInfo = Directory.CreateDirectory(IMAGEDIR);
+                            if (!directoryInfo.Exists)
+                            {
+                                Out("Could not create the directory for saving the image file");
+                                return;
+                            }
+                        }
                         Out("Downloading image file");
                         using (WebClient webClient = new WebClient())
                         {
-                            await webClient.DownloadFileTaskAsync(imageurl, image.enddate + EXT);
+                            var imageurl = HOST + image.url;
+                            await webClient.DownloadFileTaskAsync(imageurl, downloadedImagePath);
                         }
                     }
-                    Out("Enhancing wallpaper with text");
-                    var wallpaperFilename = Wallpaper.CreateWallpaperWithText(image.enddate + EXT, Losungen.ReadFromXml(@"Losungen\Losungen Free 2016.xml", DateTime.Now));
+                    var wallpaperFilename = downloadedImagePath;
+                    var losungenFile = GetLosungenFilename();
+                    if (File.Exists(losungenFile))
+                    {
+                        Out("Enhancing wallpaper with text");
+                        wallpaperFilename = Wallpaper.CreateWallpaperWithText(downloadedImagePath, Losungen.ReadFromXml(losungenFile, DateTime.Now));
+                    }
+                    else
+                    {
+                        Out("Skip enhanching the wallpaper with text, because there is no text data for that.");
+                        Out("Please install an up-to-date version of the Losungen.");
+                        Out("Please get the file " + losungenFile + " and put it into the proper directory so that it can be loaded.");
+                        Out("Please see: http://www.losungen.de/download/");
+                    }
                     Out("Setting wallpaper");
                     Wallpaper.Set(wallpaperFilename, Wallpaper.Style.Stretched);
                     Out("Wallpaper successfully applied");
@@ -79,6 +101,16 @@ namespace BingDesktop
             {
                 Out("An error occurred: " + ex.Message);
             }
+        }
+
+        private static string GetLosungenFilename()
+        {
+            return @"Losungen\Losungen Free " + DateTime.Now.Year + ".xml";
+        }
+
+        private static string GetImagePath(Image image)
+        {
+            return IMAGEDIR + "/" + image.enddate + EXT;
         }
 
         private static void Out(string format, params string[] arg)
