@@ -16,6 +16,7 @@ Build with msbuild (requires Microsoft Visual Studio 2013+):
 ### Windows
 - Requires .Net-Framework 4.6 (https://www.microsoft.com/de-de/download/details.aspx?id=49982)
 - Run the application ```BingDesktop.exe```
+
 ### Mac OS X / Linux
 - Requires Mono 4.6 (http://www.mono-project.com/download/#download-mac)
 - Run in the Mono-Commandline: ```mono BingDesktop.exe```
