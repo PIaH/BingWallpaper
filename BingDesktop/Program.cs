@@ -72,7 +72,7 @@ namespace BingDesktop
                             }
                         }
                         Out("Downloading image file");
-                        using (WebClient webClient = new WebClient())
+                        using (var webClient = new WebClient())
                         {
                             var imageurl = HOST + image.url;
                             await webClient.DownloadFileTaskAsync(imageurl, downloadedImagePath);
