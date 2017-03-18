@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BingDesktop.Data
+namespace BingWallpaper.Lib.Data
 {
     public class Image
     {

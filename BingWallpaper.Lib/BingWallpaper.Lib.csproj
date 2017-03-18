@@ -5,10 +5,10 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4AB1ED5A-59D6-4E81-BCF8-85C83BE7B309}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BingDesktop</RootNamespace>
-    <AssemblyName>BingDesktop</AssemblyName>
+    <RootNamespace>BingWallpaper.Lib</RootNamespace>
+    <AssemblyName>BingWallpaper.Lib</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -35,6 +35,9 @@
   <PropertyGroup>
     <ApplicationIcon>wpicon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -51,11 +54,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\Losungen.cs" />
-    <Compile Include="API\Wallpaper.cs" />
+    <Compile Include="Core\Losungen.cs" />
+    <Compile Include="Core\Wallpaper.cs" />
+    <Compile Include="Core\BinaryImageDownloader.cs" />
+    <Compile Include="Core\ImageWatermarker.cs" />
+    <Compile Include="Core\JsonImage.cs" />
+    <Compile Include="Core\JsonImageDownloader.cs" />
+    <Compile Include="Exceptions\WallpaperException.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="Data\Data.cs" />
-    <Compile Include="Misc\Header.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="Logging\LogLevel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +79,7 @@
     </Content>
     <Content Include="wpicon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BingDesktop.API
+namespace BingWallpaper.Lib.Core
 {
     public static class Losungen
     {

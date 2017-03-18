@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("BingDesktop")]
+[assembly: AssemblyTitle("BingWallpaper.Lib")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("BingDesktop")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2016")]
+[assembly: AssemblyCompany("ittner.it Solutions")]
+[assembly: AssemblyProduct("BingWallpaper.Lib")]
+[assembly: AssemblyCopyright("Copyright © ittner.it Solutions 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("4ab1ed5a-59d6-4e81-bcf8-85c83be7b309")]
+[assembly: Guid("4ab1ed5a-59d6-4e81-bcf8-85c83be7b310")]
 
 // Version information for an assembly consists of the following four values:
 //

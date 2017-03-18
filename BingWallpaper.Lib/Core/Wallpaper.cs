@@ -2,10 +2,11 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace BingDesktop.API
+namespace BingWallpaper.Lib.Core
 {
     public sealed class Wallpaper
     {
@@ -27,10 +28,13 @@ namespace BingDesktop.API
 
         public static void Set(string path, Style style)
         {
-            Image img = Image.FromFile(path);
-            string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
-            img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
+            string tempPath = string.Empty;
+            using (Image img = Image.FromFile(path))
+            {
+                tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
+                img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
 
+            }
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
             if (style == Style.Stretched)
             {
@@ -66,19 +70,12 @@ namespace BingDesktop.API
             return new Font(PreferedFont.FontFamily, ScaleFontSize);
         }
 
-        public static string CreateWallpaperWithText(string imagePath, string text)
+        public static void CreateWallpaperWithText(Stream image, ImageFormat imageFormat, string text, string filename)
         {
             var nl = Environment.NewLine;
             int margin = 60;
 
-            var fi = new FileInfo(imagePath);
-            var dir = fi.Directory.Name;
-            var ext = fi.Extension;
-            var filename = fi.Name.Substring(0, fi.Name.Length - ext.Length);
-
-            var newFilename = Path.Combine(dir, filename + "_losungen" + ext).ToString();
-
-            using (var bmp = new Bitmap(imagePath))
+            using (var bmp = new Bitmap(image))
             {
                 using (var g = Graphics.FromImage(bmp))
                 {
@@ -103,16 +100,18 @@ namespace BingDesktop.API
 
                                 g.Flush();
 
-                                bmp.Save(newFilename);
+                                var dir = new FileInfo(filename).Directory.FullName;
+                                if (!Directory.Exists(dir))
+                                {
+                                    Directory.CreateDirectory(dir);
+                                }
+
+                                bmp.Save(filename, imageFormat);
                             }
                         }
                     }
                 }
             }
-            // delete old image
-            File.Delete(imagePath);
-
-            return newFilename;
         }
     }
 }

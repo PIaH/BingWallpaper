@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BingDesktop.Misc
+namespace BingWallpaper.Console
 {
     public static class Header
     {
@@ -35,7 +35,7 @@ namespace BingDesktop.Misc
             var copyright = "powered by ittner.it";
 
 
-            Console.WriteLine(headline + nl + cross + nl + nl + copyright + nl + nl);
+            System.Console.WriteLine(headline + nl + cross + nl + nl + copyright + nl + nl);
         }
     }
 }
