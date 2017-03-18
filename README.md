@@ -1,4 +1,7 @@
 # BingWallpaper
+
+![BingWallpaper Logo](https://raw.githubusercontent.com/piah/BingWallpaper/master/BingWallpaper.Docs/logo.jpg)
+
 A simple but useful  application that sets the Bing wallpaper of the day without having tons of popups etc.
 There is no need to use the existing BingDesktop application from Microsoft that interrupts you with popups while working.
 ## What it does
